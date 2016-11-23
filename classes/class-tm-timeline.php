@@ -362,11 +362,14 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 		}
 
 		/**
-		 * Setup date and content filters
+		 * Setup date and content filters.
+		 *
+		 * @since 1.0.0
+		 * @since 1.0.5 Changed the priority for `tm_timeline_format_content` filter (10 => 11).
 		 */
 		public static function init_filters() {
 			add_filter( 'tm_timeline_format_date', array( 'Tm_Timeline', 'timeline_date_filter' ), 10, 2 );
-			add_filter( 'tm_timeline_format_content', array( 'Tm_Timeline', 'timeline_content_filter' ), 10, 1 );
+			add_filter( 'tm_timeline_format_content', array( 'Tm_Timeline', 'timeline_content_filter' ), 11, 1 );
 		}
 
 		/**
@@ -401,12 +404,13 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 		/**
 		 * Default timeline content filter.
 		 *
-		 * @param string $content The content that should filter be applied to.
-		 *
+		 * @since  1.0.0
+		 * @since  1.0.5 Added `the_content` filter.
+		 * @param  string $content The content that should filter be applied to.
 		 * @return string
 		 */
 		public static function timeline_content_filter( $content = '' ) {
-			return $content;
+			return apply_filters( 'the_content', $content );
 		}
 	}
 }
