@@ -18,7 +18,7 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 
 	// Load Tm_Timeline_View if class was not initialized yet.
 	if ( false === class_exists( 'Tm_Timeline_View' ) ) {
-		require tm_plugin_path( 'classes/class-tm-timeline-view.php' );
+		require tm_timeline_plugin_path( 'classes/class-tm-timeline-view.php' );
 	}
 
 	/**
@@ -47,7 +47,7 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 			// Initialize only if not initialized already
 			if ( false === self::$_initialized ) {
 
-				$views_path   = tm_plugin_path( 'views' );
+				$views_path  = tm_timeline_plugin_path( 'views' );
 				self::$_view = new Tm_Timeline_View( $views_path );
 
 				self::init_post_type();
@@ -342,7 +342,7 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 		public static function init_shortcode_assets() {
 			wp_enqueue_script(
 				'timeline-js',
-				tm_plugin_url( '/js/tm-timeline.js' ),
+				tm_timeline_plugin_url( '/js/tm-timeline.js' ),
 				array(
 					'jquery'
 				),
@@ -352,12 +352,12 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 
 			wp_enqueue_style(
 				'timeline-fontawesome-css',
-				tm_plugin_url( '/css/font-awesome.min.css' )
+				tm_timeline_plugin_url( '/css/font-awesome.min.css' )
 			);
 
 			wp_enqueue_style(
 				'timeline-css',
-				tm_plugin_url( '/css/tm-timeline.css' )
+				tm_timeline_plugin_url( '/css/tm-timeline.css' )
 			);
 		}
 

@@ -47,7 +47,7 @@ if ( ! function_exists( 'tm_timeline_init' ) ) {
 
 		// Load class if it's not initialized yet.
 		if ( ! class_exists( 'Tm_Timeline' ) ) {
-			require tm_plugin_path( 'classes/class-tm-timeline.php' );
+			require tm_timeline_plugin_path( 'classes/class-tm-timeline.php' );
 		}
 
 		// Initialize plugin frontend.
@@ -62,19 +62,17 @@ if ( ! function_exists( 'tm_timeline_init_admin' ) ) {
 	function tm_timeline_init_admin() {
 
 		// Prevent non admin access.
-		if ( false === is_admin() ) {
-			return false;
+		if ( ! is_admin() ) {
+			return;
 		}
 
 		// Load class if it's not initialized yet.
 		if ( ! class_exists( 'Tm_Timeline_Admin' ) ) {
-			require tm_plugin_path( 'admin/classes/class-tm-timeline-admin.php' );
+			require tm_timeline_plugin_path( 'admin/classes/class-tm-timeline-admin.php' );
 		}
 
 		// Initialize plugin admin.
 		Tm_Timeline_Admin::initialize();
-
-		return true;
 	}
 }
 

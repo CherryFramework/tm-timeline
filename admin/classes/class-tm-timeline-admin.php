@@ -18,12 +18,12 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 
 	// Load Tm_Timeline if class was not initialized yet.
 	if ( false === class_exists( 'Tm_Timeline' ) ) {
-		require tm_plugin_path( 'classes/class-tm-timeline.php' );
+		require tm_timeline_plugin_path( 'classes/class-tm-timeline.php' );
 	}
 
 	// Load Tm_Timeline_View if class was not initialized yet.
 	if ( false === class_exists( 'Tm_Timeline_View' ) ) {
-		require tm_plugin_path( 'classes/class-tm-timeline-view.php' );
+		require tm_timeline_plugin_path( 'classes/class-tm-timeline-view.php' );
 	}
 
 	/**
@@ -52,7 +52,7 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 			// Initialize only if not initialized already
 			if ( false === self::$_initialized ) {
 
-				$views_path   = tm_plugin_path( 'admin/views' );
+				$views_path  = tm_timeline_plugin_path( 'admin/views' );
 				self::$_view = new Tm_Timeline_View( $views_path );
 
 				add_action(
@@ -146,7 +146,7 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 		public static function styles() {
 			wp_enqueue_style(
 				'timeline-admin-css',
-				tm_plugin_url( '/admin/css/tm-timeline.css' )
+				tm_timeline_plugin_url( '/admin/css/tm-timeline.css' )
 			);
 		}
 
@@ -156,7 +156,7 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 		public static function scripts() {
 			wp_enqueue_script(
 				'timeline-admin-js',
-				tm_plugin_url( '/admin/js/tm-timeline.js' ),
+				tm_timeline_plugin_url( '/admin/js/tm-timeline.js' ),
 				array(
 					'jquery',
 				),
@@ -236,7 +236,7 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 			// Attach admin styles for the metabox
 			wp_enqueue_style(
 				'post-event-date',
-				tm_plugin_url( '/admin/css/tm-timeline.css' )
+				tm_timeline_plugin_url( '/admin/css/tm-timeline.css' )
 			);
 		}
 
