@@ -1,0 +1,23 @@
+{
+  "name": "timeline",
+  "version": "1.0.4",
+  "description": "Timeline Wordpress plugin",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dkfiresky/timeline.git"
+  },
+  "keywords": [
+    "timeline",
+    "wordpress"
+  ],
+  "author": "Template Monster",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dkfiresky/timeline/issues"
+  },
+  "homepage": "https://github.com/dkfiresky/timeline#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  }
+}

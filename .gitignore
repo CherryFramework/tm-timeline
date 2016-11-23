@@ -1,0 +1,4 @@
+.dist
+.pub
+node_modules
+.idea

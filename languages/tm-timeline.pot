@@ -1,0 +1,127 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TM Timeline\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-20 15:24+0300\n"
+"PO-Revision-Date: 2015-10-23 11:35+0200\n"
+"Language-Team: Cherry Team <support@cherryframework.com>\n"
+"Language: su\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__;__;_x;esc_html_e;esc_html__;esc_attr_e;"
+"esc_attr__;_x:1,2c;_n:1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Generator: Poedit 1.8.8\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Last-Translator: \n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: admin/classes/class-tm-timeline-admin.php:127
+#: classes/class-tm-timeline.php:67
+msgid "Posts"
+msgstr ""
+
+#: admin/classes/class-tm-timeline-admin.php:174
+#: admin/classes/class-tm-timeline-admin.php:285
+#: admin/classes/class-tm-timeline-admin.php:313
+msgid "Timeline Date"
+msgstr ""
+
+#: admin/views/post-event-date.php:13
+msgid "Choose date"
+msgstr ""
+
+#: admin/views/post-event-date.php:26
+msgid "Choose"
+msgstr ""
+
+#: admin/views/settings.php:12
+msgid "Settings"
+msgstr ""
+
+#: admin/views/settings.php:19
+msgid "Layout:"
+msgstr ""
+
+#: admin/views/settings.php:25
+msgid "Timeline look and feel"
+msgstr ""
+
+#: admin/views/settings.php:30
+msgid "Visible items limit:"
+msgstr ""
+
+#: admin/views/settings.php:32
+msgid "Visible items limit is used for \"Horizontal\" layout."
+msgstr ""
+
+#: admin/views/settings.php:37
+msgid "Date format:"
+msgstr ""
+
+#: admin/views/settings.php:43
+msgid "Date format used for displaying posts in the timeline."
+msgstr ""
+
+#: admin/views/settings.php:50
+msgid "Tag:"
+msgstr ""
+
+#: admin/views/settings.php:52
+msgid " - None - "
+msgstr ""
+
+#: admin/views/settings.php:67
+msgid ""
+"Show only posts which contain following tag. If none selected, will "
+"show all timeline posts."
+msgstr ""
+
+#: admin/views/settings.php:72
+msgid "Display anchors"
+msgstr ""
+
+#: admin/views/settings.php:74
+msgid ""
+"Timeline post title will be clickable and will lead user to the "
+"post."
+msgstr ""
+
+#: admin/views/settings.php:81
+msgid "Generate shortcode"
+msgstr ""
+
+#: admin/views/settings.php:89
+msgid "Shortcode:"
+msgstr ""
+
+#: classes/class-tm-timeline.php:68
+msgid "Post"
+msgstr ""
+
+#: classes/class-tm-timeline.php:69
+msgid "Timeline"
+msgstr ""
+
+#: classes/class-tm-timeline.php:97
+msgid "Tags"
+msgstr ""
+
+#: classes/class-tm-timeline.php:98
+msgid "Tag"
+msgstr ""
+
+#: classes/class-tm-timeline.php:165
+msgid "Horizontal"
+msgstr ""
+
+#: classes/class-tm-timeline.php:169
+msgid "Vertical"
+msgstr ""
+
+#: classes/class-tm-timeline.php:173
+msgid "Vertical (chess order)"
+msgstr ""
