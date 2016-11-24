@@ -238,7 +238,7 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 		 * Shortcode rendering function.
 		 *
 		 * @since  1.0.0
-		 * @since  1.0.5 Added `tm_timeline_query_args` filter.
+		 * @since  1.0.5 Added `tm_timeline_query_args`, `tm_timeline_remove_shortcode_script` filters.
 		 * @param  array $atts Shortcode attributes.
 		 * @return string
 		 */
@@ -305,6 +305,15 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 
 			if ( 0 === $layout ) {
 				$pages = self::get_pages( $query->posts, $args['visible-items'] );
+
+				/**
+				 * Filter a flag that control enqueue for shortcode script.
+				 *
+				 * @since 1.0.5
+				 */
+				if ( false === apply_filters( 'tm_timeline_remove_shortcode_script', false ) ) {
+					wp_enqueue_script( 'tm-timeline-js' );
+				}
 			}
 
 			// Return the rendered shortcode.
@@ -355,9 +364,11 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 		 * @since 1.0.5 Added a correct plugin version. Changed a handle for `font-awesome.min.css`.
 		 */
 		public static function init_shortcode_assets() {
-			wp_enqueue_script(
-				'timeline-js',
-				tm_timeline_plugin_url( '/js/tm-timeline.js' ),
+			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+			wp_register_script(
+				'tm-timeline-js',
+				tm_timeline_plugin_url( "/js/tm-timeline{$suffix}.js" ),
 				array( 'jquery' ),
 				TM_TIMELINE_VERSION,
 				true
@@ -371,7 +382,7 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 			);
 
 			wp_enqueue_style(
-				'timeline-css',
+				'tm-timeline-css',
 				tm_timeline_plugin_url( '/css/tm-timeline.css' ),
 				array(),
 				TM_TIMELINE_VERSION
