@@ -204,35 +204,35 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 		public static function get_supported_date_formats() {
 			return apply_filters( 'tm_timeline_shortcode_supported_date_formats', array(
 				array(
-					'title'  => 'YYYY - MM - DD',
+					'title'  => esc_html__( 'YYYY - MM - DD', 'tm-timeline' ),
 					'format' => 'Y-m-d',
 				),
 				array(
-					'title'  => 'YYYY / MM / DD',
+					'title'  => esc_html__( 'YYYY / MM / DD', 'tm-timeline' ),
 					'format' => 'Y/m/d',
 				),
 				array(
-					'title'  => 'YYYY . MM . DD',
+					'title'  => esc_html__( 'YYYY . MM . DD', 'tm-timeline' ),
 					'format' => 'Y.m.d',
 				),
 				array(
-					'title'  => 'DD - MM - YYYY',
+					'title'  => esc_html__( 'DD - MM - YYYY', 'tm-timeline' ),
 					'format' => 'd-m-Y',
 				),
 				array(
-					'title'  => 'DD / MM / YYYY',
+					'title'  => esc_html__( 'DD / MM / YYYY', 'tm-timeline' ),
 					'format' => 'd/m/Y',
 				),
 				array(
-					'title'  => 'DD . MM . YYYY',
+					'title'  => esc_html__( 'DD . MM . YYYY', 'tm-timeline' ),
 					'format' => 'd.m.Y',
 				),
 				array(
-					'title'  => 'MM',
+					'title'  => esc_html__( 'MM', 'tm-timeline' ),
 					'format' => 'm',
 				),
 				array(
-					'title'  => 'YYYY',
+					'title'  => esc_html__( 'YYYY', 'tm-timeline' ),
 					'format' => 'Y',
 				),
 			) );
@@ -413,7 +413,6 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 		 * @return string
 		 */
 		public static function timeline_date_filter( $date = '', $format = '' ) {
-
 			$result = $date;
 
 			if ( empty( $date ) ) {
@@ -428,9 +427,7 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 				$date_format = $supported_date_formats[ $format ]['format'];
 			}
 
-			$result = date( $date_format, $date );
-
-			return $result;
+			return date( $date_format, $date );
 		}
 
 		/**
