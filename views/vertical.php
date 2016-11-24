@@ -3,7 +3,7 @@
  * Vertical timeline layout
  *
  * @package    Timeline
- * @subpackage Timeline
+ * @subpackage Views
  * @author     Template Monster
  * @license    GPL-3.0+
  * @copyright  2016 Template Monster

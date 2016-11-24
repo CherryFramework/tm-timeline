@@ -12,30 +12,30 @@
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 /**
- * Register class if it does not exists already
+ * Register class if it does not exists already.
  */
-if ( false === class_exists( 'Tm_Timeline_View' ) ) {
+if ( ! class_exists( 'Tm_Timeline_View' ) ) {
 
 	/**
-	 * Simple views rendering utility class
+	 * Simple views rendering utility class.
 	 */
 	class Tm_Timeline_View {
 		/**
-		 * View files extension
+		 * View files extension.
 		 *
-		 * @const String
+		 * @const string
 		 */
 		const EXT = '.php';
 
 		/**
-		 * Views base directory path
+		 * Views base directory path.
 		 *
-		 * @var String
+		 * @var string
 		 */
 		private $_view_path;
 
 		/**
-		 * Stores variables passed to view
+		 * Stores variables passed to view.
 		 *
 		 * @var array
 		 */
@@ -49,43 +49,52 @@ if ( false === class_exists( 'Tm_Timeline_View' ) ) {
 		 * @throws Exception If directory path is not valid.
 		 */
 		public function __construct( $view_path = '' ) {
+
 			if ( false === is_dir( $view_path ) ||
 				false === is_readable( $view_path )
 			) {
 				throw new Exception( 'Invalid views path!' );
 			}
+
 			$this->_view_path = $view_path;
 		}
 
 		/**
-		 * Render and return view file content
+		 * Render and return view file content.
 		 *
-		 * @param String $filename       View file path or name.
+		 * @since 1.0.0
+		 * @since 1.0.5 Extended array of template files to search for.
+		 * @param string $filename       View file path or name.
 		 * @param array  $vars           Variables that should be exported into
 		 *                               the view scope. `$filepath` variable is accessible
 		 *                               by default and has a value of current view file
 		 *                               path.
 		 *
-		 * @return String Rendered result
+		 * @return string Rendered result
 		 */
 		public function render( $filename = '', array $vars = array() ) {
+			$filename = basename( $filename );
 			$filepath = false;
 
 			if ( false === is_admin() &&
 				false === strstr( $this->_view_path, 'admin' )
 			) {
-				// Search for `tm-timeline_$filename`
-				$filepath = locate_template( 'tm-timeline_' . basename( $filename ) . self::EXT );
+				// Array of template files to search for.
+				$template_names = array();
+				$template_names[] = 'tm-timeline_' . $filename . self::EXT;
+				$template_names[] = 'tm-timeline/' . $filename . self::EXT;
+
+				$filepath = locate_template( $template_names );
 			}
 
-			// If no file path found, use default value
+			// If no file path found, use default value.
 			if ( false === $filepath ||
 				empty( $filepath )
 			) {
 				$filepath = $this->_view_path . DIRECTORY_SEPARATOR . $filename . self::EXT;
 			}
 
-			// Allow 3rd party plugins to set the view
+			// Allow 3rd party plugins to set the view.
 			$filepath = apply_filters( 'tm_timeline_view_file', $filepath );
 
 			// Validate view file path
@@ -107,10 +116,9 @@ if ( false === class_exists( 'Tm_Timeline_View' ) ) {
 		}
 
 		/**
-		 * Validate a path
+		 * Validate a path.
 		 *
-		 * @param String $filepath Path to a file.
-		 *
+		 * @param  string $filepath Path to a file.
 		 * @return bool
 		 */
 		private function validate_path( $filepath = '' ) {
@@ -123,10 +131,9 @@ if ( false === class_exists( 'Tm_Timeline_View' ) ) {
 		}
 
 		/**
-		 * Set view variables
+		 * Set view variables.
 		 *
-		 * @param array $vars Variables collection.
-		 *
+		 * @param  array $vars Variables collection.
 		 * @return Tm_Timeline_View
 		 */
 		public function set_vars( array $vars = array() ) {
@@ -136,7 +143,7 @@ if ( false === class_exists( 'Tm_Timeline_View' ) ) {
 		}
 
 		/**
-		 * Return view variables
+		 * Return view variables.
 		 *
 		 * @return array
 		 */
@@ -145,28 +152,29 @@ if ( false === class_exists( 'Tm_Timeline_View' ) ) {
 		}
 
 		/**
-		 * Check if view variable exists
+		 * Check if view variable exists.
 		 *
-		 * @param string $name Variable name.
-		 *
+		 * @param  string $name Variable name.
 		 * @return bool
 		 */
 		public function has_var( $name = '' ) {
+
 			if ( empty( $name ) ) {
 				return false;
 			}
+
 			return isset( $this->_vars[ $name ] );
 		}
 
 		/**
-		 * Get view variable value
+		 * Get view variable value.
 		 *
-		 * @param string $name Variable name.
-		 * @param mixed  $default_value Default value returned if no value found.
-		 *
+		 * @param  string $name Variable name.
+		 * @param  mixed  $default_value Default value returned if no value found.
 		 * @return mixed
 		 */
 		public function get_var( $name = '', $default_value = null ) {
+
 			if ( false === $this->has_var( $name ) ) {
 				return $default_value;
 			}
@@ -175,14 +183,14 @@ if ( false === class_exists( 'Tm_Timeline_View' ) ) {
 		}
 
 		/**
-		 * Set view variable value
+		 * Set view variable value.
 		 *
-		 * @param string $name  Variable name.
-		 * @param mixed  $value Variable value.
-		 *
+		 * @param  string $name  Variable name.
+		 * @param  mixed  $value Variable value.
 		 * @return $this
 		 */
 		public function set_var( $name = '', $value = null ) {
+
 			if ( empty( $name ) ) {
 				return false;
 			}
@@ -193,10 +201,9 @@ if ( false === class_exists( 'Tm_Timeline_View' ) ) {
 		}
 
 		/**
-		 * Magic method for accessing view variables
+		 * Magic method for accessing view variables.
 		 *
-		 * @param string $name Variable name.
-		 *
+		 * @param  string $name Variable name.
 		 * @return mixed Variable value
 		 */
 		public function __get( $name = '' ) {
@@ -204,7 +211,7 @@ if ( false === class_exists( 'Tm_Timeline_View' ) ) {
 		}
 
 		/**
-		 * Magic method for setting the view variable value
+		 * Magic method for setting the view variable value.
 		 *
 		 * @param string $name  Variable name.
 		 * @param mixed  $value Variable value.

@@ -1,6 +1,6 @@
 <?php
 /**
- * Provide front-end related functionality
+ * Provide front-end related functionality.
  *
  * @package    Tm_Timeline
  * @subpackage Tm_Timeline
@@ -12,40 +12,41 @@
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 /**
- * Register class if it does not exists already
+ * Register class if it does not exists already.
  */
-if ( false === class_exists( 'Tm_Timeline' ) ) {
+if ( ! class_exists( 'Tm_Timeline' ) ) {
 
 	// Load Tm_Timeline_View if class was not initialized yet.
-	if ( false === class_exists( 'Tm_Timeline_View' ) ) {
+	if ( ! class_exists( 'Tm_Timeline_View' ) ) {
 		require tm_timeline_plugin_path( 'classes/class-tm-timeline-view.php' );
 	}
 
 	/**
-	 * Class contains front-end related functionality
+	 * Class contains front-end related functionality.
 	 */
 	class Tm_Timeline {
 
 		/**
 		 * Determine if initialization is required
 		 *
-		 * @var Boolean Initialized flag
+		 * @var bool Initialized flag
 		 */
 		private static $_initialized = false;
 
 		/**
-		 * Views renderer
+		 * Views renderer.
 		 *
 		 * @var Tm_Timeline_View View renderer instance
 		 */
 		private static $_view;
 
 		/**
-		 * Initialize plugin frontend
+		 * Initialize plugin frontend.
 		 */
 		public static function initialize() {
+
 			// Initialize only if not initialized already
-			if ( false === self::$_initialized ) {
+			if ( ! self::$_initialized ) {
 
 				$views_path  = tm_timeline_plugin_path( 'views' );
 				self::$_view = new Tm_Timeline_View( $views_path );
@@ -60,20 +61,24 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 		}
 
 		/**
-		 * Initialize custom post type
+		 * Initialize custom post type.
+		 *
+		 * @since 1.0.0
+		 * @since 1.0.5 Added `tm_timeline_register_post_type_args`, `tm_timeline_register_taxonomy_args` filters.
 		 */
 		public static function init_post_type() {
 			$post_labels = array(
-				'name'      => __( 'Timeline Posts', 'tm-timeline' ),
-				'singular'  => __( 'Timeline Post', 'tm-timeline' ),
-				'menu_name' => __( 'TM Timeline', 'tm-timeline' ),
+				'name'      => esc_html__( 'Timeline Posts', 'tm-timeline' ),
+				'singular'  => esc_html__( 'Timeline Post', 'tm-timeline' ),
+				'menu_name' => esc_html__( 'TM Timeline', 'tm-timeline' ),
 			);
 
 			register_post_type(
-				'timeline_post', array(
+				'timeline_post',
+				apply_filters( 'tm_timeline_register_post_type_args', array(
 					'labels'              => $post_labels,
 					'capability_type'     => 'post',
-					'description'         => 'Timeline post item',
+					'description'         => esc_html__( 'Timeline post item', 'tm-timeline' ),
 					'exclude_from_search' => false,
 					'public'              => true,
 					'publicly_queryable'  => true,
@@ -83,26 +88,28 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 					'rewrite'             => array(
 						'slug' => 'timeline-post',
 					),
-					'taxonomies'          => array(
+					'taxonomies' => array(
 						'timeline_post_tag',
 					),
-					'supports'            => array(
+					'supports'  => array(
 						'title',
 						'editor',
 						'custom_fields',
 					),
-				)
+				) )
 			);
 
 			$tag_labels = array(
-				'name'     => __( 'Tags' ),
-				'singular' => __( 'Tag' ),
+				'name'     => esc_html__( 'Tags', 'tm-timeline' ),
+				'singular' => esc_html__( 'Tag', 'tm-timeline' ),
 			);
 
 			register_taxonomy(
-				'timeline_post_tag', 'timeline_post', array(
+				'timeline_post_tag',
+				'timeline_post',
+				apply_filters( 'tm_timeline_register_taxonomy_args', array(
 					'labels'              => $tag_labels,
-					'description'         => 'Timeline post tag',
+					'description'         => esc_html__( 'Timeline post tag', 'tm-timeline' ),
 					'exclude_from_search' => false,
 					'publicly_queryable'  => true,
 					'show_tagcloud'       => true,
@@ -111,12 +118,12 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 					'rewrite'             => array(
 						'slug' => 'tm-timeline',
 					),
-				)
+				) )
 			);
 		}
 
 		/**
-		 * Initialize shortcode
+		 * Initialize shortcode.
 		 */
 		public static function init_shortcode() {
 			add_shortcode(
@@ -128,12 +135,13 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 		}
 
 		/**
-		 * Plugin uninstall handler
+		 * Plugin uninstall handler.
 		 *
-		 * @return Boolean If uninstall completed successfully
+		 * @return bool
 		 */
 		public static function uninstall() {
-			if ( false === defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+
+			if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 				exit();
 			}
 
@@ -141,50 +149,56 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 		}
 
 		/**
-		 * Get default shortcode configuration
+		 * Get default shortcode configuration.
 		 *
+		 * @since 1.0.0
+		 * @since 1.0.5 Added `tm_timeline_shortcode_default_attrs` filter.
 		 * @return array
 		 */
 		public static function get_default_attrs() {
-			return array(
+			return apply_filters( 'tm_timeline_shortcode_default_attrs', array(
 				'layout'        => 1, // Horizontal layout
 				'visible-items' => 5, // 5 visible items
 				'date-format'   => 2, // `Y.m.d` date format
 				'tag'           => '', // Tag slug, empty value mean that no filtering will be performed
 				'anchors'       => true, // Post title as anchor to the post
 				'order'         => 'DESC', // Sort order (ASC|DESC)
-			);
+			) );
 		}
 
 		/**
-		 * Get supported layouts list
+		 * Get supported layouts list.
 		 *
+		 * @since 1.0.0
+		 * @since 1.0.5 Added `tm_timeline_shortcode_supported_layouts` filter.
 		 * @return array
 		 */
 		public static function get_supported_layouts() {
-			return array(
+			return apply_filters( 'tm_timeline_shortcode_supported_layouts', array(
 				0 => array(
-					'title' => __( 'Horizontal', 'tm-timeline' ),
+					'title' => esc_html__( 'Horizontal', 'tm-timeline' ),
 					'view'  => 'horizontal',
 				),
 				1 => array(
-					'title' => __( 'Vertical', 'tm-timeline' ),
+					'title' => esc_html__( 'Vertical', 'tm-timeline' ),
 					'view'  => 'vertical',
 				),
 				2 => array(
-					'title' => __( 'Vertical (chess order)', 'tm-timeline' ),
+					'title' => esc_html__( 'Vertical (chess order)', 'tm-timeline' ),
 					'view'  => 'vertical-chessorder',
 				),
-			);
+			) );
 		}
 
 		/**
-		 * Get supported date formats
+		 * Get supported date formats.
 		 *
+		 * @since 1.0.0
+		 * @since 1.0.5 Added `tm_timeline_shortcode_supported_date_formats` filter.
 		 * @return array
 		 */
 		public static function get_supported_date_formats() {
-			return array(
+			return apply_filters( 'tm_timeline_shortcode_supported_date_formats', array(
 				array(
 					'title'  => 'YYYY - MM - DD',
 					'format' => 'Y-m-d',
@@ -217,23 +231,18 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 					'title'  => 'YYYY',
 					'format' => 'Y',
 				),
-			);
+			) );
 		}
 
 		/**
-		 * Shortcode rendering function
+		 * Shortcode rendering function.
 		 *
-		 * @param array $atts Shortcode attributes.
-		 *
+		 * @since  1.0.0
+		 * @since  1.0.5 Added `tm_timeline_query_args` filter.
+		 * @param  array $atts Shortcode attributes.
 		 * @return string
 		 */
-		public static function shortcode_frontend( $atts = array() ) {
-
-			// Passed arguments are not valid, return empty output
-			if ( false === is_array( $atts ) ) {
-				return '';
-			}
-
+		public static function shortcode_frontend( $atts ) {
 			$defaults = Tm_Timeline::get_default_attrs();
 			$args     = shortcode_atts( $defaults, $atts, 'tm-timeline' );
 
@@ -286,17 +295,19 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 			}
 
 			if ( false === empty( $args['order'] ) ) {
-				$qargs['order'] = in_array( $args['order'], array( 'ASC', 'DESC' ) ) ? esc_html( $args['order'] ) : 'DESC';
+				$qargs['order'] = in_array( $args['order'], array( 'ASC', 'DESC' ) ) ? $args['order'] : 'DESC';
 			}
 
-			// Get posts
+			$qargs = apply_filters( 'tm_timeline_query_args', $qargs, $atts );
+
+			// Get posts.
 			$query = new WP_Query( $qargs );
 
 			if ( 0 === $layout ) {
 				$pages = self::get_pages( $query->posts, $args['visible-items'] );
 			}
 
-			// Return the rendered shortcode
+			// Return the rendered shortcode.
 			return self::$_view->render(
 				$view,
 				array(
@@ -308,27 +319,28 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 		}
 
 		/**
-		 * Calculate pages based on visible_items count
+		 * Calculate pages based on visible_items count.
 		 *
-		 * @param array   $timeline_events Collection of all timeline posts.
-		 * @param integer $visible_items   Limit the visible items (only for horizontal layout).
-		 *
+		 * @param  array $timeline_events Collection of all timeline posts.
+		 * @param  int   $visible_items   Limit the visible items (only for horizontal layout).
 		 * @return array
 		 */
 		private static function get_pages( array $timeline_events, $visible_items = - 1 ) {
 			$pages = array();
 			$total = sizeof( $timeline_events );
 
-			// If no visible items, show all
+			// If no visible items, show all.
 			if ( 0 >= $visible_items ) {
 				$visible_items = $total;
 			}
 
 			if ( $total === $visible_items ) {
-				// We got only one page
+
+				// We got only one page.
 				$pages = array(
 					$timeline_events
 				);
+
 			} else {
 				$pages = array_chunk( $timeline_events, $visible_items, true );
 			}
@@ -337,27 +349,32 @@ if ( false === class_exists( 'Tm_Timeline' ) ) {
 		}
 
 		/**
-		 * Add shortcode js/css into the queue
+		 * Add shortcode js/css into the queue.
+		 *
+		 * @since 1.0.0
+		 * @since 1.0.5 Added a correct plugin version. Changed a handle for `font-awesome.min.css`.
 		 */
 		public static function init_shortcode_assets() {
 			wp_enqueue_script(
 				'timeline-js',
 				tm_timeline_plugin_url( '/js/tm-timeline.js' ),
-				array(
-					'jquery'
-				),
-				'1.0.0',
+				array( 'jquery' ),
+				TM_TIMELINE_VERSION,
 				true
 			);
 
 			wp_enqueue_style(
-				'timeline-fontawesome-css',
-				tm_timeline_plugin_url( '/css/font-awesome.min.css' )
+				'font-awesome',
+				tm_timeline_plugin_url( '/css/font-awesome.min.css' ),
+				array(),
+				'4.6.3'
 			);
 
 			wp_enqueue_style(
 				'timeline-css',
-				tm_timeline_plugin_url( '/css/tm-timeline.css' )
+				tm_timeline_plugin_url( '/css/tm-timeline.css' ),
+				array(),
+				TM_TIMELINE_VERSION
 			);
 		}
 

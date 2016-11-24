@@ -17,6 +17,8 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
+define( 'TM_TIMELINE_VERSION', '1.0.4' );
+
 add_action( 'plugins_loaded', 'tm_timeline_lang' );
 add_action( 'init', 'tm_timeline_init' );
 add_action( 'init', 'tm_timeline_init_admin' );
@@ -25,7 +27,7 @@ register_activation_hook( __FILE__, 'tm_timeline_activate' );
 register_deactivation_hook( __FILE__, 'tm_timeline_deactivate' );
 
 /**
- * Timeline plugin main file
+ * Timeline plugin main file.
  */
 require dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'functions.php';
 
