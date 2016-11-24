@@ -1,6 +1,6 @@
 <?php
 /**
- * Provide admin-related functionality
+ * Provide admin-related functionality.
  *
  * @package    Tm_Timeline
  * @subpackage Tm_Timeline_Admin
@@ -12,43 +12,47 @@
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 /**
- * Register class if it does not exists already
+ * Register class if it does not exists already.
  */
-if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
+if ( ! class_exists( 'Tm_Timeline_Admin' ) ) {
 
 	// Load Tm_Timeline if class was not initialized yet.
-	if ( false === class_exists( 'Tm_Timeline' ) ) {
+	if ( ! class_exists( 'Tm_Timeline' ) ) {
 		require tm_timeline_plugin_path( 'classes/class-tm-timeline.php' );
 	}
 
 	// Load Tm_Timeline_View if class was not initialized yet.
-	if ( false === class_exists( 'Tm_Timeline_View' ) ) {
+	if ( ! class_exists( 'Tm_Timeline_View' ) ) {
 		require tm_timeline_plugin_path( 'classes/class-tm-timeline-view.php' );
 	}
 
 	/**
-	 * Class contains admin-related functionality
+	 * Class contains admin-related functionality.
 	 */
 	class Tm_Timeline_Admin {
 
 		/**
-		 * Determine if initialization is required
+		 * Determine if initialization is required.
 		 *
-		 * @var Boolean
+		 * @var bool
 		 */
 		private static $_initialized = false;
 
 		/**
-		 * Views renderer
+		 * Views renderer.
 		 *
 		 * @var Tm_Timeline_View Timeline view instance
 		 */
 		private static $_view;
 
 		/**
-		 * Initialize plugin admin
+		 * Initialize plugin admin.
+		 *
+		 * @since 1.0.0
+		 * @since 1.0.5 Changed js/css registration - added `Tm_Timeline_Admin::assets` method.
 		 */
 		public static function initialize() {
+
 			// Initialize only if not initialized already
 			if ( false === self::$_initialized ) {
 
@@ -73,7 +77,8 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 					'save_post', array(
 						'Tm_Timeline_Admin',
 						'save_post_event_date',
-					)
+					),
+					10, 2
 				);
 
 				add_filter(
@@ -98,16 +103,9 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 				);
 
 				add_action(
-					'load-timeline_post_page_timeline_create', array(
+					'admin_enqueue_scripts', array(
 						'Tm_Timeline_Admin',
-						'styles',
-					)
-				);
-
-				add_action(
-					'load-timeline_post_page_timeline_create', array(
-						'Tm_Timeline_Admin',
-						'scripts',
+						'assets',
 					)
 				);
 
@@ -116,7 +114,7 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 		}
 
 		/**
-		 * Initialize admin menu
+		 * Initialize admin menu.
 		 */
 		public static function menu() {
 			global $submenu;
@@ -124,15 +122,15 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 			$url = 'edit.php?post_type=timeline_post';
 
 			// Rename Timeline sub-menu item into Posts
-			$submenu[ $url ][5][0] = __( 'Posts', 'tm-timeline' );
+			$submenu[ $url ][5][0] = esc_html__( 'Posts', 'tm-timeline' );
 
 			// Add shortcode generator page to the Timeline sub-menu
 			add_submenu_page(
 				$url,
-				__( 'TM Timeline', 'tm-timeline' ),
-				__( 'Settings', 'tm-timeline' ),
+				esc_html__( 'TM Timeline', 'tm-timeline' ),
+				esc_html__( 'Settings', 'tm-timeline' ),
 				'manage_options',
-				'timeline_create',
+				Tm_Timeline_Admin::get_menu_slug(),
 				array(
 					'Tm_Timeline_Admin',
 					'handle_settings',
@@ -141,27 +139,41 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 		}
 
 		/**
-		 * Attach admin styles
+		 * Retrieve a slug for setting page.
+		 *
+		 * @since 1.0.5
 		 */
-		public static function styles() {
-			wp_enqueue_style(
-				'timeline-admin-css',
-				tm_timeline_plugin_url( '/admin/css/tm-timeline.css' )
-			);
+		public static function get_menu_slug() {
+			return apply_filters( 'tm_timeline_admin_menu_slug', 'timeline_create' );
 		}
 
 		/**
-		 * Attach admin javascript
+		 * Attach admin javascript and styleshet.
+		 *
+		 * @since 1.0.5
 		 */
-		public static function scripts() {
+		public static function assets( $hook ) {
+			$menu_slug = Tm_Timeline_Admin::get_menu_slug();
+
+			if ( false === stripos( $hook, $menu_slug ) ) {
+				return;
+			}
+
+			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
 			wp_enqueue_script(
-				'timeline-admin-js',
-				tm_timeline_plugin_url( '/admin/js/tm-timeline.js' ),
-				array(
-					'jquery',
-				),
-				'1.0.0',
+				'tm-timeline-admin-js',
+				tm_timeline_plugin_url( "/admin/js/tm-timeline{$suffix}.js" ),
+				array( 'jquery' ),
+				TM_TIMELINE_VERSION,
 				true
+			);
+
+			wp_enqueue_style(
+				'tm-timeline-admin-css',
+				tm_timeline_plugin_url( "/admin/css/tm-timeline{$suffix}.css" ),
+				array(),
+				TM_TIMELINE_VERSION
 			);
 		}
 
@@ -171,7 +183,7 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 		public static function register_meta_boxes() {
 			add_meta_box(
 				'post-event-date',
-				__( 'Timeline Date', 'tm-timeline' ),
+				esc_html__( 'Timeline Date', 'tm-timeline' ),
 				array(
 					'Tm_Timeline_Admin',
 					'render_post_event_date_meta_box',
@@ -183,16 +195,16 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 		}
 
 		/**
-		 * Render the `post-event-date` custom field
+		 * Render the `post-event-date` custom field.
 		 *
-		 * @param WP_Post $post Wordpress post.
+		 * @param WP_Post $post WordPress post.
 		 * @param array   $atts Metabox options.
 		 */
 		public static function render_post_event_date_meta_box(
 			WP_Post $post,
 			array $atts
 		) {
-			// Gather the values
+			// Gather the values.
 			$id    = $atts['id'];
 			$title = $atts['title'];
 			$value = get_post_meta( $post->ID, $id, true );
@@ -213,12 +225,14 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 		}
 
 		/**
-		 * Initialize metabox assets
+		 * Initialize metabox assets.
 		 */
 		public static function init_meta_box_assets() {
 			global $wp_scripts;
 
-			// Attach the assets for jquery's datepicker
+			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+			// Attach the assets for jquery's datepicker.
 			wp_enqueue_script( 'jquery-ui-datepicker' );
 
 			$jqui_core = $wp_scripts->query( 'jquery-ui-core' );
@@ -229,14 +243,16 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 			}
 
 			$jqui_theme = 'http://ajax.googleapis.com/ajax/libs/jqueryui/' . $version
-				. '/themes/smoothness/jquery-ui.css';
+				. "/themes/smoothness/jquery-ui{$suffix}.css";
 
-			wp_enqueue_style( 'jquery-ui-core', $jqui_theme, false, false, null );
+			wp_enqueue_style( 'jquery-ui-core', $jqui_theme, false, $version );
 
-			// Attach admin styles for the metabox
+			// Attach admin styles for the metabox.
 			wp_enqueue_style(
-				'post-event-date',
-				tm_timeline_plugin_url( '/admin/css/tm-timeline.css' )
+				'tm-timeline-post-event-date',
+				tm_timeline_plugin_url( "/admin/css/tm-timeline{$suffix}.css" ),
+				array( 'jquery-ui-core' ),
+				TM_TIMELINE_VERSION
 			);
 		}
 
@@ -247,7 +263,7 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 		 *
 		 * @return int
 		 */
-		public static function save_post_event_date( $post_id ) {
+		public static function save_post_event_date( $post_id, $post ) {
 
 			// Check if values are passed
 			if ( false === isset( $_POST['post-event-date-nonce'] ) ||
@@ -286,7 +302,7 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 		 */
 		public static function add_table_columns( array $columns ) {
 			$post_event_date_column = array(
-				'post-event-date' => __( 'Timeline Date', 'tm-timeline' ),
+				'post-event-date' => esc_html__( 'Timeline Date', 'tm-timeline' ),
 			);
 
 			unset( $columns['date'] );
@@ -320,20 +336,20 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 		 */
 		public static function register_sortable_table_columns( array $columns ) {
 			$columns['post-event-date'] = array(
-				__( 'Timeline Date', 'tm-timeline' )
+				esc_html__( 'Timeline Date', 'tm-timeline' )
 			);
 
 			return $columns;
 		}
 
 		/**
-		 * Render & output the shortcode generator page (also known as `Settings`)
+		 * Render & output the shortcode generator page (also known as `Settings`).
 		 *
 		 * @throws Exception If view file was not found or renderer has no access to read it.
 		 */
 		public static function handle_settings() {
-			// Get available layouts & date formats
-			$timeline_layouts    = Tm_Timeline::get_supported_layouts();
+			// Get available layouts & date formats.
+			$timeline_layouts     = Tm_Timeline::get_supported_layouts();
 			$timeline_date_format = Tm_Timeline::get_supported_date_formats();
 
 			// Get tags list
@@ -346,12 +362,12 @@ if ( false === class_exists( 'Tm_Timeline_Admin' ) ) {
 			// Render the `Settings` page view
 			$content = self::$_view->render(
 				'settings', array(
-					'tags'               => $tags,
-					'timeline_layouts'    => $timeline_layouts,
+					'tags'                 => $tags,
+					'timeline_layouts'     => $timeline_layouts,
 					'timeline_date_format' => $timeline_date_format,
 					'sort_orders' => array(
-						'ASC' => __( 'Ascending', 'tm-timeline' ),
-						'DESC' => __( 'Descending', 'tm-timeline' ),
+						'ASC'  => esc_html__( 'Ascending', 'tm-timeline' ),
+						'DESC' => esc_html__( 'Descending', 'tm-timeline' ),
 					),
 				)
 			);

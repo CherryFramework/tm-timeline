@@ -42,6 +42,9 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 
 		/**
 		 * Initialize plugin frontend.
+		 *
+		 * @since 1.0.0
+		 * @since 1.0.5 Change to enqueued scripts - added call to action `wp_enqueue_scripts`.
 		 */
 		public static function initialize() {
 
@@ -54,7 +57,8 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 				self::init_post_type();
 				self::init_shortcode();
 				self::init_filters();
-				self::init_shortcode_assets();
+
+				add_action( 'wp_enqueue_scripts', array( 'Tm_Timeline', 'init_shortcode_assets' ) );
 
 				self::$_initialized = false;
 			}

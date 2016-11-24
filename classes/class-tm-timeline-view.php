@@ -104,6 +104,13 @@ if ( ! class_exists( 'Tm_Timeline_View' ) ) {
 				);
 			}
 
+			/**
+			 * Filter a variables that passed to view file.
+			 *
+			 * @since 1.0.5
+			 */
+			$vars = apply_filters( 'tm_timeline_render_vars', $vars, $filename );
+
 			// Export vars to the view
 			$this->set_vars( $vars );
 			unset( $vars, $filename, $view );
