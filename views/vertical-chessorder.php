@@ -18,9 +18,13 @@ if ( 0 < sizeof( $this->timeline_events ) ) :
 
 			<div class="tm_timeline__tense"></div>
 
-			<?php $class_name = 'odd';
-			$i               = 0; ?>
-			<?php foreach ( $this->timeline_events as $post ) : ?>
+		<?php global $post;
+			$class_name = 'odd';
+			$i          = 0;
+
+			foreach ( $this->timeline_events as $post ) :
+				setup_postdata( $post ); ?>
+
 				<div class="tm_timeline__event tm_timeline__event-<?php print esc_attr( $class_name ); ?>">
 					<?php
 						if ( 0 === ( $i % 2 ) ) {
@@ -47,12 +51,12 @@ if ( 0 < sizeof( $this->timeline_events ) ) :
 						<?php print apply_filters( 'tm_timeline_format_content', $post->post_content ); ?>
 					</div>
 				</div>
+
 				<?php $i = $i + 1; ?>
 			<?php endforeach; ?>
+			<?php wp_reset_postdata(); ?>
 
 		</div>
-
 	</div>
-
 </div>
 <?php endif; ?>

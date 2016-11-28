@@ -16,7 +16,10 @@ if ( 0 < sizeof( $this->timeline_events ) ) :
 
 		<div class="tm_timeline__body-tense">
 
-			<?php foreach ( $this->timeline_events as $post ) : ?>
+			<?php global $post;
+			foreach ( $this->timeline_events as $post ) :
+				setup_postdata( $post ); ?>
+
 				<div class="tm_timeline__event">
 					<div class="tm_timeline__event__dot"></div>
 					<?php
@@ -36,11 +39,11 @@ if ( 0 < sizeof( $this->timeline_events ) ) :
 						<?php print apply_filters( 'tm_timeline_format_content', $post->post_content ); ?>
 					</div>
 				</div>
+
 			<?php endforeach; ?>
+			<?php wp_reset_postdata(); ?>
 
 		</div>
-
 	</div>
-
 </div>
 <?php endif; ?>

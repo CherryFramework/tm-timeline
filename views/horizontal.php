@@ -28,7 +28,7 @@ if ( 0 < sizeof( $this->pages ) ) :
 
 					<?php if ( 0 < sizeof( $page ) ) : ?>
 						<div class="tm_timeline__page<?php print esc_attr( 0 == $i ? ' tm_timeline__page-current' :
-							'' );	?>" data-index="<?php print esc_attr( $index ); ?>">
+							'' ); ?>" data-index="<?php print esc_attr( $index ); ?>">
 
 							<div class="tm_timeline__page__content">
 								<?php foreach ( $page as $post ) : ?>
