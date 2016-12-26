@@ -9,7 +9,6 @@
 			$horizontalTimeline,
 			$slides,
 			$pages,
-			//slidesWidth,
 			$node,
 			$control,
 			$current,
@@ -19,11 +18,7 @@
 			$horizontalTimeline = $( this );
 
 			$slides = $horizontalTimeline.find( '.tm_timeline__page' );
-			$pages = $horizontalTimeline.find( '.tm_timeline__pages' );
-			//slidesWidth = $slides.first().width() + 5;
-
-			// Set initial width
-			//$pages.css( 'width', slidesWidth * $slides.length );
+			$pages  = $horizontalTimeline.find( '.tm_timeline__pages' );
 
 			// Attach event listener to slides controls
 			$horizontalTimeline.find( '.tm_timeline__control' ).on( 'click', function( event ) {
@@ -35,10 +30,6 @@
 				$horizontalTimeline = $( this ).parents().filter( '.tm_timeline' );
 				$slides = $horizontalTimeline.find( '.tm_timeline__page' );
 				$pages = $horizontalTimeline.find( '.tm_timeline__pages' );
-				//slidesWidth = $slides.first().width() + 5;
-
-				// Set initial width
-				//$pages.css( 'width', slidesWidth * $slides.length );
 
 				// Get current page
 				$current = $( this ).parents().filter( '.tm_timeline' ).find( '.tm_timeline__page-current' );
