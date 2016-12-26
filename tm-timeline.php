@@ -6,7 +6,7 @@
  * Text Domain: tm-timeline
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
- * Version:     1.0.4
+ * Version:     1.0.5
  * Domain Path: /languages
  *
  * @package     Timeline
@@ -17,7 +17,7 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-define( 'TM_TIMELINE_VERSION', '1.0.4' );
+define( 'TM_TIMELINE_VERSION', '1.0.5' );
 
 add_action( 'plugins_loaded', 'tm_timeline_lang' );
 add_action( 'init', 'tm_timeline_init' );

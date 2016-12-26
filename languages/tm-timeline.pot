@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TM Timeline\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-20 15:24+0300\n"
+"POT-Creation-Date: 2016-12-26 22:04+0200\n"
 "PO-Revision-Date: 2015-10-23 11:35+0200\n"
 "Language-Team: Cherry Team <support@cherryframework.com>\n"
 "Language: su\n"
@@ -14,20 +14,37 @@ msgstr ""
 "esc_attr__;_x:1,2c;_n:1,2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.8\n"
+"X-Generator: Poedit 1.8.11\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "Last-Translator: \n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/classes/class-tm-timeline-admin.php:127
-#: classes/class-tm-timeline.php:67
+#: admin/classes/class-tm-timeline-admin.php:125
 msgid "Posts"
 msgstr ""
 
-#: admin/classes/class-tm-timeline-admin.php:174
-#: admin/classes/class-tm-timeline-admin.php:285
-#: admin/classes/class-tm-timeline-admin.php:313
+#: admin/classes/class-tm-timeline-admin.php:130
+#: classes/class-tm-timeline.php:77
+msgid "TM Timeline"
+msgstr ""
+
+#: admin/classes/class-tm-timeline-admin.php:131
+#: admin/views/settings.php:12
+msgid "Settings"
+msgstr ""
+
+#: admin/classes/class-tm-timeline-admin.php:186
+#: admin/classes/class-tm-timeline-admin.php:305
+#: admin/classes/class-tm-timeline-admin.php:339
 msgid "Timeline Date"
+msgstr ""
+
+#: admin/classes/class-tm-timeline-admin.php:369
+msgid "Ascending"
+msgstr ""
+
+#: admin/classes/class-tm-timeline-admin.php:370
+msgid "Descending"
 msgstr ""
 
 #: admin/views/post-event-date.php:13
@@ -36,10 +53,6 @@ msgstr ""
 
 #: admin/views/post-event-date.php:26
 msgid "Choose"
-msgstr ""
-
-#: admin/views/settings.php:12
-msgid "Settings"
 msgstr ""
 
 #: admin/views/settings.php:19
@@ -74,54 +87,98 @@ msgstr ""
 msgid " - None - "
 msgstr ""
 
-#: admin/views/settings.php:67
+#: admin/views/settings.php:67 admin/views/settings.php:85
 msgid ""
 "Show only posts which contain following tag. If none selected, will "
 "show all timeline posts."
 msgstr ""
 
 #: admin/views/settings.php:72
+msgid "Sort Order:"
+msgstr ""
+
+#: admin/views/settings.php:90
 msgid "Display anchors"
 msgstr ""
 
-#: admin/views/settings.php:74
+#: admin/views/settings.php:92
 msgid ""
 "Timeline post title will be clickable and will lead user to the "
 "post."
 msgstr ""
 
-#: admin/views/settings.php:81
+#: admin/views/settings.php:99
 msgid "Generate shortcode"
 msgstr ""
 
-#: admin/views/settings.php:89
+#: admin/views/settings.php:107
 msgid "Shortcode:"
 msgstr ""
 
-#: classes/class-tm-timeline.php:68
-msgid "Post"
+#: classes/class-tm-timeline.php:75
+msgid "Timeline Posts"
 msgstr ""
 
-#: classes/class-tm-timeline.php:69
-msgid "Timeline"
+#: classes/class-tm-timeline.php:76
+msgid "Timeline Post"
 msgstr ""
 
-#: classes/class-tm-timeline.php:97
+#: classes/class-tm-timeline.php:85
+msgid "Timeline post item"
+msgstr ""
+
+#: classes/class-tm-timeline.php:107
 msgid "Tags"
 msgstr ""
 
-#: classes/class-tm-timeline.php:98
+#: classes/class-tm-timeline.php:108
 msgid "Tag"
 msgstr ""
 
-#: classes/class-tm-timeline.php:165
+#: classes/class-tm-timeline.php:116
+msgid "Timeline post tag"
+msgstr ""
+
+#: classes/class-tm-timeline.php:183
 msgid "Horizontal"
 msgstr ""
 
-#: classes/class-tm-timeline.php:169
+#: classes/class-tm-timeline.php:187
 msgid "Vertical"
 msgstr ""
 
-#: classes/class-tm-timeline.php:173
+#: classes/class-tm-timeline.php:191
 msgid "Vertical (chess order)"
+msgstr ""
+
+#: classes/class-tm-timeline.php:207
+msgid "YYYY - MM - DD"
+msgstr ""
+
+#: classes/class-tm-timeline.php:211
+msgid "YYYY / MM / DD"
+msgstr ""
+
+#: classes/class-tm-timeline.php:215
+msgid "YYYY . MM . DD"
+msgstr ""
+
+#: classes/class-tm-timeline.php:219
+msgid "DD - MM - YYYY"
+msgstr ""
+
+#: classes/class-tm-timeline.php:223
+msgid "DD / MM / YYYY"
+msgstr ""
+
+#: classes/class-tm-timeline.php:227
+msgid "DD . MM . YYYY"
+msgstr ""
+
+#: classes/class-tm-timeline.php:231
+msgid "MM"
+msgstr ""
+
+#: classes/class-tm-timeline.php:235
+msgid "YYYY"
 msgstr ""
