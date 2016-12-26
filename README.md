@@ -1,6 +1,6 @@
-# Timeline [![Build Status](https://travis-ci.org/dkfiresky/tm-timeline.svg?branch=master)](https://travis-ci.org/dkfiresky/tm-timeline)
+# Timeline [![Build Status](https://api.travis-ci.org/CherryFramework/tm-timeline.svg?branch=master)](https://travis-ci.org/CherryFramework/tm-timeline)
 
-This is timeline plugin for [Wordpress](https://wordpress.org/).
+This is timeline plugin for [WordPress](https://wordpress.org/).
 
 This plugin provides a timeline with multiple layouts:
 
@@ -12,4 +12,4 @@ This plugin provides a timeline with multiple layouts:
 
 # Installation
 
-Simply download the archive and uncompress it to your `wp-contents/plugins` directory.
+Simply download the archive and uncompress it to your `wp-content/plugins` directory.
