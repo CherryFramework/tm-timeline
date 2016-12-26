@@ -11,8 +11,7 @@
 			$pages,
 			$node,
 			$control,
-			$current,
-			offset = 0;
+			$current;
 
 		$horizontalTimelines.each( function() {
 			$horizontalTimeline = $( this );
