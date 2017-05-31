@@ -6,7 +6,7 @@
  * @subpackage Tm_Timeline
  * @author     Template Monster
  * @license    GPL-3.0+
- * @copyright  2016 Template Monster
+ * @copyright  2017 Template Monster
  */
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
@@ -41,6 +41,14 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 		private static $_view;
 
 		/**
+		 * Shortcode tag.
+		 *
+		 * @since 1.1.0
+		 * @var string
+		 */
+		private static $shortcode_tag = 'tm-timeline';
+
+		/**
 		 * Initialize plugin frontend.
 		 *
 		 * @since 1.0.0
@@ -58,7 +66,7 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 				self::init_shortcode();
 				self::init_filters();
 
-				add_action( 'wp_enqueue_scripts', array( 'Tm_Timeline', 'init_shortcode_assets' ) );
+				add_action( 'wp_enqueue_scripts', array( __CLASS__, 'init_shortcode_assets' ) );
 
 				self::$_initialized = false;
 			}
@@ -132,24 +140,51 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 		public static function init_shortcode() {
 			add_shortcode(
 				'tm-timeline', array(
-					'Tm_Timeline',
+					__CLASS__,
 					'shortcode_frontend',
 				)
 			);
+
+			if ( defined( 'ELEMENTOR_VERSION' ) ) {
+				require_once tm_timeline_plugin_path( 'includes/ext/elementor/class-tm-timeline-elementor-compat.php' );
+				tm_timeline_elementor_compat( array(
+					self::get_shortcode_tag() => array(
+						'title' => esc_html__( 'Cherry Timeline', 'tm-timeline' ),
+						'file'  => tm_timeline_plugin_path( 'includes/ext/elementor/class-tm-timeline-elementor-module.php' ),
+						'class' => 'TM_Timeline_Elementor_Widget',
+						// 'icon'  => 'eicon-testimonial',
+						'atts'  => self::_get_shortcode_atts(),
+					),
+				) );
+			}
 		}
 
 		/**
-		 * Plugin uninstall handler.
+		 * Retrieve a shortcode tag.
 		 *
-		 * @return bool
+		 * @since 1.1.0
+		 * @return string
 		 */
-		public static function uninstall() {
+		public static function get_shortcode_tag() {
+			return apply_filters( 'tm_timeline_shortcode_tag', self::$shortcode_tag );
+		}
 
-			if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-				exit();
-			}
+		public static function _get_shortcode_atts() {
+			return apply_filters( 'tm_timeline_get_shortcode_atts', array(
+				'layout' => array(
+					'name' => esc_html__( 'Timeline', 'tm-timeline' ),
 
-			return true;
+					'type'        => 'select',
+					'title'       => esc_html__( 'Layout', 'tm-timeline' ),
+					'description' => esc_html__( 'Layout type (`list` or `slider`)', 'tm-timeline' ),
+					'options'     => array(
+						0 => esc_html__( 'Horizontal', 'tm-timeline' ),
+						1 => esc_html__( 'Vertical', 'tm-timeline' ),
+					),
+					'value'   => 0,
+					'default' => 0,
+				),
+			) );
 		}
 
 		/**
@@ -247,7 +282,7 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 		 * @return string
 		 */
 		public static function shortcode_frontend( $atts ) {
-			$defaults = Tm_Timeline::get_default_attrs();
+			$defaults = self::get_default_attrs();
 			$args     = shortcode_atts( $defaults, $atts, 'tm-timeline' );
 
 			// `$args['anchors']` is a string, sadly
@@ -400,8 +435,8 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 		 * @since 1.0.5 Changed the priority for `tm_timeline_format_content` filter (10 => 11).
 		 */
 		public static function init_filters() {
-			add_filter( 'tm_timeline_format_date', array( 'Tm_Timeline', 'timeline_date_filter' ), 10, 2 );
-			add_filter( 'tm_timeline_format_content', array( 'Tm_Timeline', 'timeline_content_filter' ), 11, 1 );
+			add_filter( 'tm_timeline_format_date', array( __CLASS__, 'timeline_date_filter' ), 10, 2 );
+			add_filter( 'tm_timeline_format_content', array( __CLASS__, 'timeline_content_filter' ), 11, 1 );
 		}
 
 		/**
@@ -440,6 +475,20 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 		 */
 		public static function timeline_content_filter( $content = '' ) {
 			return apply_filters( 'the_content', $content );
+		}
+
+		/**
+		 * Plugin uninstall handler.
+		 *
+		 * @return bool
+		 */
+		public static function uninstall() {
+
+			if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+				exit();
+			}
+
+			return true;
 		}
 	}
 }
