@@ -19,9 +19,9 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
 define( 'TM_TIMELINE_VERSION', '1.1.0-beta' );
 
-add_action( 'plugins_loaded', 'tm_timeline_lang' );
-add_action( 'init', 'tm_timeline_init' );
-add_action( 'init', 'tm_timeline_init_admin' );
+add_action( 'plugins_loaded', 'tm_timeline_lang', 1 );
+add_action( 'plugins_loaded', 'tm_timeline_init', 2 );
+add_action( 'plugins_loaded', 'tm_timeline_init_admin', 3 );
 
 register_activation_hook( __FILE__, 'tm_timeline_activate' );
 register_deactivation_hook( __FILE__, 'tm_timeline_deactivate' );

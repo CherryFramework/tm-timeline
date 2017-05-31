@@ -9,9 +9,7 @@ class TM_Timeline_Elementor_Widget extends Elementor\Widget_Base {
 	 *
 	 * @var array
 	 */
-	protected $rewrite = array(
-		'id' => 'post_id',
-	);
+	protected $rewrite = array();
 
 	/**
 	 * Get shortcode data by name

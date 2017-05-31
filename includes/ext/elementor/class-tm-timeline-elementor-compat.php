@@ -2,7 +2,7 @@
 /**
  * Init elementor compatibility.
  *
- * @package    Cherry_Testi
+ * @package    Tm_Timeline
  * @subpackage Public
  * @author     Template Monster
  * @license    GPL-3.0+
