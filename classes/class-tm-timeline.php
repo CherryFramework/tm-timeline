@@ -180,8 +180,8 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 					'title'       => esc_html__( 'Layout', 'tm-timeline' ),
 					'description' => esc_html__( 'Layout type', 'tm-timeline' ),
 					'options'     => wp_list_pluck( self::get_supported_layouts(), 'title' ),
-					'value'       => 0,
-					'default'     => 0,
+					'value'       => '0',
+					'default'     => '0',
 				),
 				'visible-items' => array(
 					'type'        => 'slider',
@@ -191,15 +191,15 @@ if ( ! class_exists( 'Tm_Timeline' ) ) {
 					'max_value'   => 5,
 					'min_value'   => 1,
 					'condition' => array(
-						'layout' => array( '0' ),
+						'layout' => '0',
 					),
 				),
 				'date-format' => array(
 					'type'    => 'select',
 					'title'   => esc_html__( 'Date format', 'tm-timeline' ),
 					'options' => wp_list_pluck( self::get_supported_date_formats(), 'title' ),
-					'value'   => 2,
-					'default' => 2,
+					'value'   => '0',
+					'default' => '0',
 				),
 				'tag' => array(
 					'type'        => 'select',
