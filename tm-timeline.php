@@ -6,22 +6,22 @@
  * Text Domain: tm-timeline
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
- * Version:     1.0.5
+ * Version:     1.1.0
  * Domain Path: /languages
  *
  * @package     Timeline
  * @author      Template Monster
  * @license     GPL-3.0+
- * @copyright   2016 Template Monster
+ * @copyright   2017 Template Monster
  */
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-define( 'TM_TIMELINE_VERSION', '1.0.5' );
+define( 'TM_TIMELINE_VERSION', '1.1.0' );
 
-add_action( 'plugins_loaded', 'tm_timeline_lang' );
-add_action( 'init', 'tm_timeline_init' );
-add_action( 'init', 'tm_timeline_init_admin' );
+add_action( 'plugins_loaded', 'tm_timeline_lang', 1 );
+add_action( 'plugins_loaded', 'tm_timeline_init', 2 );
+add_action( 'plugins_loaded', 'tm_timeline_init_admin', 3 );
 
 register_activation_hook( __FILE__, 'tm_timeline_activate' );
 register_deactivation_hook( __FILE__, 'tm_timeline_deactivate' );

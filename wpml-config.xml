@@ -1,0 +1,11 @@
+<wpml-config>
+	<custom-types>
+		<custom-type translate="1">timeline_post</custom-type>
+	</custom-types>
+	<taxonomies>
+		<taxonomy translate="1">timeline_post_tag</taxonomy>
+	</taxonomies>
+	<custom-fields>
+		<custom-field action="copy">post-event-date</custom-field>
+	</custom-fields>
+</wpml-config>

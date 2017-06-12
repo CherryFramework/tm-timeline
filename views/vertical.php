@@ -6,7 +6,7 @@
  * @subpackage Views
  * @author     Template Monster
  * @license    GPL-3.0+
- * @copyright  2016 Template Monster
+ * @copyright  2017 Template Monster
  */
 
 if ( 0 < sizeof( $this->timeline_events ) ) :

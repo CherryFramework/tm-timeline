@@ -6,7 +6,7 @@
  * @subpackage Tm_Timeline_Admin
  * @author     Template Monster
  * @license    GPL-3.0+
- * @copyright  2016 Template Monster
+ * @copyright  2017 Template Monster
  */
 ?><div class="wrap timeline-settings-page">
 	<h1><?php echo esc_html__( 'Settings', 'tm-timeline' ); ?></h1>

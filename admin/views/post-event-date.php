@@ -6,7 +6,7 @@
  * @subpackage Tm_Timeline_Admin
  * @author     Template Monster
  * @license    GPL-3.0+
- * @copyright  2016 Template Monster
+ * @copyright  2017 Template Monster
  */
 ?><input type="hidden" name="<?php print esc_attr( sprintf( '%s-nonce', $this->id ) ); ?>" value="<?php print esc_attr( $this->nonce ); ?>">
 
