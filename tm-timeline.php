@@ -1,12 +1,14 @@
 <?php
 /**
  * Plugin Name: TM Timeline
+ * Plugin URI:  https://wordpress.org/plugins/tm-timeline/
  * Description: This plugin allows users to build their own timelines
- * Author:      Template Monster
+ * Author:      Jetimpex
+ * Author URI:  https://jetimpex.com/wordpress/
  * Text Domain: tm-timeline
  * License:     GPL-3.0+
  * License URI: http://www.gnu.org/licenses/gpl-3.0.txt
- * Version:     1.1.0
+ * Version:     1.1.1
  * Domain Path: /languages
  *
  * @package     Timeline
@@ -17,7 +19,7 @@
 
 defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-define( 'TM_TIMELINE_VERSION', '1.1.0' );
+define( 'TM_TIMELINE_VERSION', '1.1.1' );
 
 add_action( 'plugins_loaded', 'tm_timeline_lang', 1 );
 add_action( 'plugins_loaded', 'tm_timeline_init', 2 );

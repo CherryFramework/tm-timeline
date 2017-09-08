@@ -3,8 +3,8 @@
 Contributors: TemplateMonster 2002
 Tags: timeline, timelines, event, history
 Requires at least: 4.5
-Tested up to: 4.8
-Stable tag: 1.1.0
+Tested up to: 4.8.1
+Stable tag: 1.1.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -50,6 +50,10 @@ In order to create a timeline follow these steps:
 5. Simply copy the generated shortcode to your page or post
 
 == Changelog ==
+
+= 1.1.1 =
+
+* Fixed bugs
 
 = 1.1.0 =
 
