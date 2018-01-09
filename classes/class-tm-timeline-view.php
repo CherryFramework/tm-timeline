@@ -76,9 +76,7 @@ if ( ! class_exists( 'Tm_Timeline_View' ) ) {
 			$filename = basename( $filename );
 			$filepath = false;
 
-			if ( false === is_admin() &&
-				false === strstr( $this->_view_path, 'admin' )
-			) {
+			if ( false === strstr( $this->_view_path, 'admin' ) ) {
 				// Array of template files to search for.
 				$template_names = array();
 				$template_names[] = 'tm-timeline_' . $filename . self::EXT;
