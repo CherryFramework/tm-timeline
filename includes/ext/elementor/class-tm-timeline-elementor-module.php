@@ -219,7 +219,7 @@ class TM_Timeline_Elementor_Widget extends Elementor\Widget_Base {
 		}
 
 		?>
-		<div class="elementor-<?php $tag; ?>"><?php
+		<div class="elementor-<?php echo $tag; ?>"><?php
 			echo do_shortcode( sprintf( $shortcode, $tag, $shortcode_atts ) );
 		?></div>
 		<?php
